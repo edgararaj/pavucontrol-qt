@@ -7,89 +7,87 @@
 
 #include <memory>
 
-using QtNodes::PortType;
-using QtNodes::PortIndex;
 using QtNodes::NodeData;
-using QtNodes::NodeDataType;
 using QtNodes::NodeDataModel;
+using QtNodes::NodeDataType;
 using QtNodes::NodeValidationState;
+using QtNodes::PortIndex;
+using QtNodes::PortType;
 
 /// The class can potentially incapsulate any user data which
 /// need to be transferred within the Node Editor graph
-class MyNodeData : public NodeData
-{
+class MyNodeData : public NodeData {
 public:
-    NodeDataType type() const override { return NodeDataType {"Out", "Out"}; }
+	virtual NodeDataType type() const override { return NodeDataType { "Out", "Out" }; }
 };
 
 //------------------------------------------------------------------------------
 
 /// The model dictates the number of inputs and outputs for the Node.
 /// In this example it has no logic.
-class MySink : public NodeDataModel
-{
-    Q_OBJECT
+class MySink : public NodeDataModel {
+	Q_OBJECT
 
 public:
-    virtual ~MySink() {}
+	virtual ~MySink() { }
 
-    QString caption() const override
-    {
-        return m_caption;
-    }
+	virtual QString caption() const override
+	{
+		return m_caption;
+	}
 
-    void setCaption(QString caption)
-    {
-        m_caption = caption;
-    }
+	void setCaption(QString caption)
+	{
+		m_caption = caption;
+	}
 
-    QString name() const override
-    {
-        return QString("MySink");
-    }
+	virtual QString name() const override
+	{
+		return QString("MySink");
+	}
 
-    QJsonObject save() const override
-    {
-        QJsonObject modelJson;
+	virtual QJsonObject save() const override
+	{
+		QJsonObject modelJson;
 
-        modelJson["name"] = name();
+		modelJson["name"] = name();
 
-        return modelJson;
-    }
+		return modelJson;
+	}
 
-    unsigned int nPorts(PortType portType) const override
-    {
-        switch (portType) {
-        case PortType::In:
-            return 0;
-        case PortType::Out:
-            return 1;
-        default:
-            Q_UNREACHABLE();
-        }
-    }
+	virtual unsigned int nPorts(PortType portType) const override
+	{
+		switch (portType) {
+		case PortType::In:
+			return 0;
+		case PortType::Out:
+			return 1;
+		default:
+			Q_UNREACHABLE();
+		}
+	}
 
-    NodeDataType dataType(PortType, PortIndex) const override
-    {
-        return MyNodeData().type();
-    }
+	virtual NodeDataType dataType(PortType, PortIndex) const override
+	{
+		return MyNodeData().type();
+	}
 
-    std::shared_ptr<NodeData> outData(PortIndex) override
-    {
-        return std::make_shared<MyNodeData>();
-    }
+	virtual std::shared_ptr<NodeData> outData(PortIndex) override
+	{
+		return std::make_shared<MyNodeData>();
+	}
 
-    void setInData(std::shared_ptr<NodeData>, int) override
-    {
-        //
-    }
+	virtual void setInData(std::shared_ptr<NodeData>, int) override
+	{
+		//
+	}
 
-    QWidget * embeddedWidget() override { return nullptr; }
+	virtual QWidget* embeddedWidget() override { return nullptr; }
 
-    ConnectionPolicy portInConnectionPolicy(PortIndex) const override
-    {
-        return ConnectionPolicy::Many;
-    }
+	virtual ConnectionPolicy portInConnectionPolicy(PortIndex) const override
+	{
+		return ConnectionPolicy::Many;
+	}
 
-    QString m_caption;
+	QString m_caption;
 };

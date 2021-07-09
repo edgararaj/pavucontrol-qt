@@ -46,5 +46,5 @@ pkg_check_modules(
     libpulse-mainloop-glib>=0.9.16
 )
 
-add_subdirectory("/home/edgar/git/nodeeditor" "/home/edgar/git/build-nodeeditor-Desktop-Debug")
+add_subdirectory(submodules/nodeeditor)
 add_subdirectory(src)

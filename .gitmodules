@@ -1,0 +1,4 @@
+[submodule "submodules/nodeeditor"]
+	path = submodules/nodeeditor
+	url = git@github.com:edgararaj/nodeeditor.git
+	branch = my_branch
