@@ -4,8 +4,6 @@ This fork of pavucontrol-qt is focused on creating a simple and intuitive way fo
 
 ## Installation
 
-### Compiling source code
-
 Runtime dependencies:
 * qtbase
 * libpulse (PulseAudio client library)
@@ -16,16 +14,16 @@ Build dependencies:
 * ninja
 
 #### 1st step: Clone the repo
-```bash
+```console
 git clone --recurse-submodules https://github.com/edgararaj/pavucontrol-qt.git
 ```
 or if you already cloned the repo and forgot --recurse-submodules,
-```bash
+```console
 git submodule update --init --recursive
 ```
 
 #### 2nd step: Build and install the project
-```bash
+```console
 ~/pavucontrol-qt$ mkdir build && cd build
 ~/pavucontrol-qt/build$ cmake -GNinja ..
 ~/pavucontrol-qt/build$ ninja install
@@ -33,6 +31,7 @@ git submodule update --init --recursive
 
 #### 3rd step: Have fun! 🎉
 To run just type:
-```bash
-~$ pavucontrol-qt
+```console
+$ pavucontrol-qt
 ```
+
