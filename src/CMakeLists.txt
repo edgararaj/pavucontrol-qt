@@ -1,45 +1,42 @@
-include_directories(
-    ${PULSE_INCLUDE_DIRS}
-    ${GLIB_INCLUDE_DIRS}
-)
-
 set(pavucontrol-qt_HDRS
-    pavucontrol.h
-    mainwindow.h
-    cardwidget.h
-    channel.h
-    devicewidget.h
-    minimalstreamwidget.h
-    rolewidget.h
-    sinkinputwidget.h
-    sinkwidget.h
-    sourceoutputwidget.h
-    sourcewidget.h
-    streamwidget.h
-    elidinglabel.h
+	pavucontrol.h
+	mainwindow.h
+	cardwidget.h
+	channel.h
+	devicewidget.h
+	minimalstreamwidget.h
+	rolewidget.h
+	sinkinputwidget.h
+	sinkwidget.h
+	sourceoutputwidget.h
+	sourcewidget.h
+	streamwidget.h
+	elidinglabel.h
+	models.h
 )
 
 set(pavucontrol-qt_SRCS
-    pavucontrol.cc
-    mainwindow.cc
-    cardwidget.cc
-    channel.cc
-    devicewidget.cc
-    minimalstreamwidget.cc
-    rolewidget.cc
-    sinkinputwidget.cc
-    sinkwidget.cc
-    sourceoutputwidget.cc
-    sourcewidget.cc
-    streamwidget.cc
-    elidinglabel.cc
+	pavucontrol.cc
+	mainwindow.cc
+	cardwidget.cc
+	channel.cc
+	devicewidget.cc
+	minimalstreamwidget.cc
+	rolewidget.cc
+	sinkinputwidget.cc
+	sinkwidget.cc
+	sourceoutputwidget.cc
+	sourcewidget.cc
+	streamwidget.cc
+	elidinglabel.cc
+	models.cc
 )
 
 set(pavucontrol-qt_UI
-    cardwidget.ui
-    devicewidget.ui
-    mainwindow.ui
-    streamwidget.ui
+	cardwidget.ui
+	devicewidget.ui
+	mainwindow.ui
+	streamwidget.ui
 )
 
 # Translations
@@ -55,37 +52,44 @@ set(pavucontrol-qt_UI
 #)
 
 #lxqt_translate_desktop(DESKTOP_FILES
-    #SOURCES
-    #pavucontrol-qt.desktop.in
-    #USE_YAML
+	#SOURCES
+	#pavucontrol-qt.desktop.in
+	#USE_YAML
 #)
 
 add_executable(pavucontrol-qt
-    ${pavucontrol-qt_SRCS}
-    ${pavucontrol-qt_QM_FILES}
-    ${pavucontrol-qt_QM_LOADER}
-    ${DESKTOP_FILES}
+	${pavucontrol-qt_SRCS}
+	${pavucontrol-qt_QM_FILES}
+	${pavucontrol-qt_QM_LOADER}
+	${DESKTOP_FILES}
 )
+
 set_property(
-     TARGET pavucontrol-qt APPEND
-     PROPERTY COMPILE_DEFINITIONS
-     PAVUCONTROL_QT_DATA_DIR="${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}"
+	 TARGET pavucontrol-qt APPEND
+	 PROPERTY COMPILE_DEFINITIONS
+	 PAVUCONTROL_QT_DATA_DIR="${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}"
+)
+
+target_include_directories(pavucontrol-qt PRIVATE
+	${PULSE_INCLUDE_DIRS}
+	${GLIB_INCLUDE_DIRS}
 )
 
 target_link_libraries(pavucontrol-qt
-    Qt5::Widgets
-    ${PULSE_LDFLAGS}
-    ${GLIB_LDFLAGS}
+	Qt5::Widgets
+	${PULSE_LDFLAGS}
+	${GLIB_LDFLAGS}
+        nodes
 )
 
 install(TARGETS
-    pavucontrol-qt
-    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-    COMPONENT Runtime
+	pavucontrol-qt
+	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+	COMPONENT Runtime
 )
 
 install(FILES
-    ${DESKTOP_FILES}
-    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications"
-    COMPONENT Runtime
+	${DESKTOP_FILES}
+	DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications"
+	COMPONENT Runtime
 )

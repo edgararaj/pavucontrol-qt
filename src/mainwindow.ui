@@ -339,6 +339,12 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_6">
+      <attribute name="title">
+       <string>&amp;Nodes</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="nodesVBox"/>
+     </widget>
     </widget>
    </item>
    <item>

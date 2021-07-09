@@ -26,6 +26,7 @@
 
 #include "cardwidget.h"
 #include "mainwindow.h"
+#include "models.h"
 #include "rolewidget.h"
 #include "sinkinputwidget.h"
 #include "sinkwidget.h"
@@ -34,6 +35,11 @@
 #include <QIcon>
 #include <QSettings>
 #include <QStyle>
+#include <nodes/ConnectionStyle>
+#include <nodes/DataModelRegistry>
+#include <nodes/FlowViewStyle>
+#include <nodes/NodeData>
+#include <nodes/NodeStyle>
 
 /* Used for profile sorting */
 struct profile_prio_compare {
@@ -69,6 +75,70 @@ struct source_port_prio_compare {
 	}
 };
 
+static std::shared_ptr<QtNodes::DataModelRegistry> nv_register_data_models()
+{
+	auto ret = std::make_shared<QtNodes::DataModelRegistry>();
+
+	ret->registerModel<MySink>();
+
+	return ret;
+}
+
+static void nv_set_style()
+{
+	QtNodes::FlowViewStyle::setStyle(
+		R"(
+  {
+	"FlowViewStyle": {
+	  "BackgroundColor": [255, 255, 255],
+	  "FineGridColor": [255, 255, 255],
+	  "CoarseGridColor": [255, 255, 255]
+	}
+  }
+  )");
+
+	QtNodes::NodeStyle::setNodeStyle(
+		R"(
+  {
+	"NodeStyle": {
+	  "NormalBoundaryColor": "darkgray",
+	  "SelectedBoundaryColor": "deepskyblue",
+	  "GradientColor0": "mintcream",
+	  "GradientColor1": "mintcream",
+	  "GradientColor2": "mintcream",
+	  "GradientColor3": "mintcream",
+	  "ShadowColor": [200, 200, 200],
+	  "FontColor": [10, 10, 10],
+	  "FontColorFaded": [100, 100, 100],
+	  "ConnectionPointColor": "white",
+	  "PenWidth": 2.0,
+	  "HoveredPenWidth": 2.5,
+	  "ConnectionPointDiameter": 10.0,
+	  "Opacity": 1.0
+	}
+  }
+  )");
+
+	QtNodes::ConnectionStyle::setConnectionStyle(
+		R"(
+  {
+	"ConnectionStyle": {
+	  "ConstructionColor": "gray",
+	  "NormalColor": "black",
+	  "SelectedColor": "gray",
+	  "SelectedHaloColor": "deepskyblue",
+	  "HoveredColor": "deepskyblue",
+
+	  "LineWidth": 3.0,
+	  "ConstructionLineWidth": 2.0,
+	  "PointDiameter": 10.0,
+
+	  "UseDataDefinedColors": false
+	}
+  }
+  )");
+}
+
 MainWindow::MainWindow()
 	: QDialog()
 	, showSinkInputType(SINK_INPUT_CLIENT)
@@ -82,6 +152,12 @@ MainWindow::MainWindow()
 {
 
 	setupUi(this);
+
+	nv_set_style();
+	m_nv_registry = std::move(nv_register_data_models());
+	m_nv_scene = new QtNodes::FlowScene { m_nv_registry };
+	m_nv_view = new QtNodes::FlowView { m_nv_scene };
+	nodesVBox->layout()->addWidget(m_nv_view);
 
 	sinkInputTypeComboBox->setCurrentIndex((int)showSinkInputType);
 	sourceOutputTypeComboBox->setCurrentIndex((int)showSourceOutputType);

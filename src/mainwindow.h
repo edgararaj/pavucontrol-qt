@@ -29,6 +29,8 @@
 
 #include "ui_mainwindow.h"
 #include <QDialog>
+#include <nodes/FlowScene>
+#include <nodes/FlowView>
 
 class CardWidget;
 class SinkWidget;
@@ -108,6 +110,10 @@ public:
 private:
 	gboolean m_connected;
 	gchar* m_config_filename;
+
+	QtNodes::FlowScene* m_nv_scene;
+	QtNodes::FlowView* m_nv_view;
+	std::shared_ptr<QtNodes::DataModelRegistry> m_nv_registry;
 };
 
 #endif
