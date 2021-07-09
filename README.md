@@ -14,24 +14,24 @@ Build dependencies:
 * ninja
 
 #### 1st step: Clone the repo
-```console
+```
 git clone --recurse-submodules https://github.com/edgararaj/pavucontrol-qt.git
 ```
 or if you already cloned the repo and forgot --recurse-submodules,
-```console
+```
 git submodule update --init --recursive
 ```
 
 #### 2nd step: Build and install the project
 ```console
-~/pavucontrol-qt$ mkdir build && cd build
-~/pavucontrol-qt/build$ cmake -GNinja ..
-~/pavucontrol-qt/build$ ninja install
+foo@bar:~/pavucontrol-qt$ mkdir build && cd build
+foo@bar:~/pavucontrol-qt/build$ cmake -GNinja ..
+foo@bar:~/pavucontrol-qt/build$ ninja install
 ```
 
 #### 3rd step: Have fun! 🎉
 To run just type:
 ```console
-$ pavucontrol-qt
+foo@bar:~$ pavucontrol-qt
 ```
 
