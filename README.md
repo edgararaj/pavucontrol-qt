@@ -1,56 +1,38 @@
 # pavucontrol-qt
 
-## Overview
-
-pavucontrol-qt is the Qt port of volume control [pavucontrol](https://freedesktop.org/software/pulseaudio/pavucontrol/) of sound server [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/).   
-
-As such it can be used to adjust all controls provided by PulseAudio as well as some additional settings.   
-
-The software belongs to the LXQt project but its usage isn't limited to this desktop environment.   
+This fork of pavucontrol-qt is focused on creating a simple and intuitive way for people to manage their sound devices and app sound output and interconnect them.
 
 ## Installation
 
 ### Compiling source code
 
-Runtime dependencies are qtbase and PulseAudio client library libpulse.   
-Additional build dependencies are CMake and [liblxqt](https://github.com/lxqt/liblxqt) as well as optionally Git to pull latest VCS checkouts. The localization files were outsourced to repository [lxqt-l10n](https://github.com/lxqt/lxqt-l10n) so the corresponding dependencies are needed, too. Please refer to this repository's `README.md` for further information.
+Runtime dependencies:
+* qtbase
+* libpulse (PulseAudio client library)
 
-Code configuration is handled by CMake. CMake variable `CMAKE_INSTALL_PREFIX` has to be set to `/usr` on most operating systems.   
+Build dependencies:
+* base-devel
+* cmake
+* ninja
 
-To build run `make`, to install `make install` which accepts variable `DESTDIR` as usual.   
+#### 1st step: Clone the repo
+```bash
+git clone --recurse-submodules https://github.com/edgararaj/pavucontrol-qt.git
+```
+or if you already cloned the repo and forgot --recurse-submodules,
+```bash
+git submodule update --init --recursive
+```
 
-### Binary packages
+#### 2nd step: Build and install the project
+```bash
+~/pavucontrol-qt$ mkdir build && cd build
+~/pavucontrol-qt/build$ cmake -GNinja ..
+~/pavucontrol-qt/build$ ninja install
+```
 
-On Arch Linux the package [pavucontrol-qt](https://www.archlinux.org/packages/community/x86_64/pavucontrol-qt/) can be used and [pavucontrol-qt-git](https://aur.archlinux.org/packages/pavucontrol-qt-git/) is to build current checkouts of branch `master`.
-
-On FreeBSD the binary package is available as [pavucontrol-qt](https://www.freshports.org/audio/pavucontrol-qt/) and can be installed with `pkg install pavucontrol-qt`.
-
-#### Debian
-
-Package `pavucontrol-qt` is available in the official repositories as of Debian buster. 
-
-#### Fedora
-
-Package `pavucontrol-qt` is available in the official repositories as of Fedora 31. 
-
-#### OpenSuse
-
-Package `pavucontrol-qt` is available in the official repositories as of openSUSE Leap:15.2 
-
-
-
-
-## Usage
-
-In LXQt sessions the binary is placed in sub-menu "Sound & Video" of the panel's main menu.   
-
-The usage itself should be self-explanatory.
-
-
-## Translations
-
-Translations can be done in [LXQt-Weblate](https://translate.lxqt-project.org/projects/lxqt-configuration/pavucontrol-qt/).
-
-<a href="https://translate.lxqt-project.org/projects/lxqt-configuration/pavucontrol-qt/">
-<img src="https://translate.lxqt-project.org/widgets/lxqt-configuration/-/pavucontrol-qt/multi-auto.svg" alt="Translation status" />
-</a>
+#### 3rd step: Have fun! 🎉
+To run just type:
+```bash
+~$ pavucontrol-qt
+```
