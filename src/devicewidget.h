@@ -32,61 +32,61 @@ class MainWindow;
 class Channel;
 class QAction;
 
-class DeviceWidget : public MinimalStreamWidget, public Ui::DeviceWidget {
-    Q_OBJECT
+class DeviceWidget : public MinimalStreamWidget
+	, public Ui::DeviceWidget {
+	Q_OBJECT
 public:
-    DeviceWidget(MainWindow *parent, QByteArray deviceType = "");
+	DeviceWidget(MainWindow* parent, QByteArray deviceType = "");
 
-    void setChannelMap(const pa_channel_map &m, bool can_decibel);
-    void setVolume(const pa_cvolume &volume, bool force = false);
-    virtual void updateChannelVolume(int channel, pa_volume_t v);
+	void setChannelMap(const pa_channel_map& m, bool can_decibel);
+	void setVolume(const pa_cvolume& volume, bool force = false);
+	virtual void updateChannelVolume(int channel, pa_volume_t v);
 
-    void hideLockedChannels(bool hide = true);
+	void hideLockedChannels(bool hide = true);
 
-    QByteArray name;
-    QByteArray description;
-    uint32_t index, card_index;
+	QByteArray name;
+	QByteArray description;
+	uint32_t index, card_index;
 
-    bool offsetButtonEnabled;
+	bool offsetButtonEnabled;
 
-    pa_channel_map channelMap;
-    pa_cvolume volume;
+	pa_channel_map channelMap;
+	pa_cvolume volume;
 
-    Channel *channels[PA_CHANNELS_MAX];
+	Channel* channels[PA_CHANNELS_MAX];
 
 public Q_SLOTS:
-    virtual void onMuteToggleButton();
-    virtual void onLockToggleButton();
-    virtual void onDefaultToggleButton();
-    virtual void setDefault(bool isDefault);
-    // virtual bool onContextTriggerEvent(GdkEventButton*);
-    virtual void setLatencyOffset(int64_t offset);
-    void onOffsetChange();
-    bool timeoutEvent();
+	virtual void onMuteToggleButton();
+	virtual void onLockToggleButton();
+	virtual void onDefaultToggleButton();
+	virtual void setDefault(bool isDefault);
+	// virtual bool onContextTriggerEvent(GdkEventButton*);
+	virtual void setLatencyOffset(int64_t offset);
+	void onOffsetChange();
+	bool timeoutEvent();
 
 public:
-    QTimer timeout;
+	QTimer timeout;
 
-    virtual void executeVolumeUpdate();
-    virtual void setBaseVolume(pa_volume_t v);
+	virtual void executeVolumeUpdate();
+	virtual void setBaseVolume(pa_volume_t v);
 
-    std::vector< std::pair<QByteArray,QByteArray> > ports;
-    QByteArray activePort;
+	std::vector<std::pair<QByteArray, QByteArray>> ports;
+	QByteArray activePort;
 
-    void prepareMenu();
+	void prepareMenu();
 
-    void renamePopup();
+	void renamePopup();
 
 protected:
-    MainWindow *mpMainWindow;
+	MainWindow* mpMainWindow;
 
-    virtual void onPortChange() = 0;
+	virtual void onPortChange() = 0;
 
-    QAction * rename;
+	QAction* rename;
 
 private:
-    QByteArray mDeviceType;
-
+	QByteArray mDeviceType;
 };
 
 #endif

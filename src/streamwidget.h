@@ -31,38 +31,39 @@ class MainWindow;
 class Channel;
 class QAction;
 
-class StreamWidget : public MinimalStreamWidget, public Ui::StreamWidget {
-    Q_OBJECT
+class StreamWidget : public MinimalStreamWidget
+	, public Ui::StreamWidget {
+	Q_OBJECT
 public:
-    StreamWidget(MainWindow *parent);
+	StreamWidget(MainWindow* parent);
 
-    void setChannelMap(const pa_channel_map &m, bool can_decibel);
-    void setVolume(const pa_cvolume &volume, bool force = false);
-    virtual void updateChannelVolume(int channel, pa_volume_t v);
+	void setChannelMap(const pa_channel_map& m, bool can_decibel);
+	void setVolume(const pa_cvolume& volume, bool force = false);
+	virtual void updateChannelVolume(int channel, pa_volume_t v);
 
-    void hideLockedChannels(bool hide = true);
+	void hideLockedChannels(bool hide = true);
 
-    pa_channel_map channelMap;
-    pa_cvolume volume;
+	pa_channel_map channelMap;
+	pa_cvolume volume;
 
-    Channel *channels[PA_CHANNELS_MAX];
+	Channel* channels[PA_CHANNELS_MAX];
 
-    virtual void onMuteToggleButton();
-    virtual void onLockToggleButton();
-    virtual void onDeviceChangePopup();
-    // virtual bool onContextTriggerEvent(GdkEventButton*);
+	virtual void onMuteToggleButton();
+	virtual void onLockToggleButton();
+	virtual void onDeviceChangePopup();
+	// virtual bool onContextTriggerEvent(GdkEventButton*);
 
-    QTimer timeout;
+	QTimer timeout;
 
-    bool timeoutEvent();
+	bool timeoutEvent();
 
-    virtual void executeVolumeUpdate();
-    virtual void onKill();
+	virtual void executeVolumeUpdate();
+	virtual void onKill();
 
 protected:
-    MainWindow* mpMainWindow;
+	MainWindow* mpMainWindow;
 
-    QAction * terminate;
+	QAction* terminate;
 };
 
 #endif

@@ -21,44 +21,43 @@
 #ifndef sinkwidget_h
 #define sinkwidget_h
 
-#include "pavucontrol.h"
 #include "devicewidget.h"
-
+#include "pavucontrol.h"
 
 #if HAVE_EXT_DEVICE_RESTORE_API
-#  include <pulse/format.h>
+#	include <pulse/format.h>
 
-#  define PAVU_NUM_ENCODINGS 6
+#	define PAVU_NUM_ENCODINGS 6
 
 class QCheckBox;
 
 typedef struct {
-    pa_encoding encoding;
-    QCheckBox *widget;
+	pa_encoding encoding;
+	QCheckBox* widget;
 } encodingList;
 #endif
 
 class SinkWidget : public DeviceWidget {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    SinkWidget(MainWindow *parent);
+	SinkWidget(MainWindow* parent);
 
-    SinkType type;
-    uint32_t monitor_index;
-    bool can_decibel;
+	SinkType type;
+	uint32_t monitor_index;
+	bool can_decibel;
 
 #if HAVE_EXT_DEVICE_RESTORE_API
-    encodingList encodings[PAVU_NUM_ENCODINGS];
+	encodingList encodings[PAVU_NUM_ENCODINGS];
 #endif
 
-    virtual void onMuteToggleButton();
-    virtual void executeVolumeUpdate();
-    virtual void onDefaultToggleButton();
-    void setDigital(bool);
+	virtual void onMuteToggleButton();
+	virtual void executeVolumeUpdate();
+	virtual void onDefaultToggleButton();
+	void setDigital(bool);
 
 protected Q_SLOTS:
-    virtual void onPortChange();
-    virtual void onEncodingsChange();
+	virtual void onPortChange();
+	virtual void onEncodingsChange();
 };
 
 #endif

@@ -26,15 +26,15 @@
 #include "streamwidget.h"
 
 class RoleWidget : public StreamWidget {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    RoleWidget(MainWindow* parent);
+	RoleWidget(MainWindow* parent);
 
-    QByteArray role;
-    QByteArray device;
+	QByteArray role;
+	QByteArray device;
 
-    virtual void onMuteToggleButton();
-    virtual void executeVolumeUpdate();
+	virtual void onMuteToggleButton();
+	virtual void executeVolumeUpdate();
 };
 
 #endif

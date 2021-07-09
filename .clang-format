@@ -1,0 +1,16 @@
+---
+Language: Cpp
+BasedOnStyle: WebKit
+SpaceAfterTemplateKeyword: false
+AlignEscapedNewlines: true
+AlignTrailingComments: true
+BreakBeforeInheritanceComma: true
+BreakConstructorInitializers: BeforeComma
+IndentPPDirectives: AfterHash
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterFunction: true
+NamespaceIndentation: None
+IndentWidth: 4
+TabWidth: 4
+UseTab: Always

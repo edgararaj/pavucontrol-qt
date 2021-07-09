@@ -21,18 +21,18 @@
 #include <QLabel>
 
 class ElidingLabel : public QLabel {
-  Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit ElidingLabel(QWidget *parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
+	explicit ElidingLabel(QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+	void paintEvent(QPaintEvent* event) override;
 
 private:
-    QString elidedText_;
-    QString lastText_;
-    int lastWidth_;
+	QString elidedText_;
+	QString lastText_;
+	int lastWidth_;
 };
 
 #endif // elidinglabel_h
