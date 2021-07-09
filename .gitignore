@@ -3,3 +3,5 @@ build
 .deps
 *.tar.gz
 *.swp
+CMakeLists.txt.user
+CMakeLists.txt.user.*

@@ -19,14 +19,14 @@ include(GNUInstallDirs)
 
 # Minimum Versions
 set(GLIB_MINIMUM_VERSION "2.50.0")
-set(LXQTBT_MINIMUM_VERSION "0.9.0")
+#set(LXQTBT_MINIMUM_VERSION "0.9.0")
 set(QT_MINIMUM_VERSION "5.15.0")
 
 find_package(Qt5Widgets ${QT_MINIMUM_VERSION} REQUIRED)
 find_package(Qt5LinguistTools ${QT_MINIMUM_VERSION} REQUIRED)
-find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
+#find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
 
-find_package(GLIB ${GLIB_MINIMUM_VERSION} REQUIRED)
+#find_package(GLIB ${GLIB_MINIMUM_VERSION} REQUIRED)
 
 set(PAVUCONTROLQT_MAJOR_VERSION 0)
 set(PAVUCONTROLQT_MINOR_VERSION 17)
@@ -34,11 +34,12 @@ set(PAVUCONTROLQT_PATCH_VERSION 0)
 set(PAVUCONTROLQT_VERSION ${PAVUCONTROLQT_MAJOR_VERSION}.${PAVUCONTROLQT_MINOR_VERSION}.${PAVUCONTROLQT_PATCH_VERSION})
 add_definitions("-DPAVUCONTROLQT_VERSION=\"${PAVUCONTROLQT_VERSION}\"")
 
-include(LXQtPreventInSourceBuilds)
-include(LXQtCompilerSettings NO_POLICY_SCOPE)
-include(LXQtTranslate)
+#include(LXQtPreventInSourceBuilds)
+#include(LXQtCompilerSettings NO_POLICY_SCOPE)
+#include(LXQtTranslate)
 
 find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK2 REQUIRED gtk+-2.0)
 pkg_check_modules(
     PULSE REQUIRED
     libpulse>=5.0

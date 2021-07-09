@@ -43,22 +43,22 @@ set(pavucontrol-qt_UI
 )
 
 # Translations
-lxqt_translate_ts(pavucontrol-qt_QM_FILES
-    UPDATE_TRANSLATIONS
-        ${UPDATE_TRANSLATIONS}
-    SOURCES
-        ${pavucontrol-qt_HDRS}
-        ${pavucontrol-qt_SRCS}
-        ${pavucontrol-qt_UI}
-    INSTALL_DIR
-        "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/translations"
-)
+#lxqt_translate_ts(pavucontrol-qt_QM_FILES
+	#UPDATE_TRANSLATIONS
+		#${UPDATE_TRANSLATIONS}
+	#SOURCES
+		#${pavucontrol-qt_HDRS}
+		#${pavucontrol-qt_SRCS}
+		#${pavucontrol-qt_UI}
+	#INSTALL_DIR
+		#"${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/translations"
+#)
 
-lxqt_translate_desktop(DESKTOP_FILES
-    SOURCES
-    pavucontrol-qt.desktop.in
-    USE_YAML
-)
+#lxqt_translate_desktop(DESKTOP_FILES
+    #SOURCES
+    #pavucontrol-qt.desktop.in
+    #USE_YAML
+#)
 
 add_executable(pavucontrol-qt
     ${pavucontrol-qt_SRCS}
