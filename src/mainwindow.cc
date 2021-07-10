@@ -38,6 +38,7 @@
 #include <nodes/ConnectionStyle>
 #include <nodes/DataModelRegistry>
 #include <nodes/FlowViewStyle>
+#include <nodes/Node>
 #include <nodes/NodeData>
 #include <nodes/NodeStyle>
 
@@ -154,7 +155,7 @@ MainWindow::MainWindow()
 	setupUi(this);
 
 	nv_set_style();
-	m_nv_registry = std::move(nv_register_data_models());
+	m_nv_registry = nv_register_data_models();
 	m_nv_scene = new QtNodes::FlowScene { m_nv_registry };
 	m_nv_view = new QtNodes::FlowView { m_nv_scene };
 	nodesVBox->layout()->addWidget(m_nv_view);
@@ -667,6 +668,7 @@ void MainWindow::updateSinkInput(const pa_sink_input_info& info)
 {
 	const char* t;
 	SinkInputWidget* w;
+	MySink* sink;
 	bool is_new = false;
 
 	if ((t = pa_proplist_gets(info.proplist, "module-stream-restore.id"))) {
@@ -674,6 +676,14 @@ void MainWindow::updateSinkInput(const pa_sink_input_info& info)
 			g_debug("%s", tr("Ignoring sink-input due to it being designated as an event and thus handled by the Event widget").toUtf8().constData());
 			return;
 		}
+	}
+
+	if (nvSinkInputs.count(info.index)) {
+		sink = static_cast<MySink*>(nvSinkInputs[info.index]->nodeDataModel());
+	} else {
+		auto node = m_nv_registry->create("MySink");
+		sink = static_cast<MySink*>(node.get());
+		nvSinkInputs[info.index] = &m_nv_scene->createNode(std::move(node));
 	}
 
 	if (sinkInputWidgets.count(info.index)) {
@@ -707,9 +717,13 @@ void MainWindow::updateSinkInput(const pa_sink_input_info& info)
 		g_free(txt);
 		w->nameLabel->setText(QString::fromUtf8(txt = g_markup_printf_escaped(": %s", info.name)));
 		g_free(txt);
+
+		sink->setCaption(clientNames[info.client]);
 	} else {
 		w->boldNameLabel->setText(QLatin1String(""));
 		w->nameLabel->setText(QString::fromUtf8(info.name));
+
+		sink->setCaption("");
 	}
 
 	w->nameLabel->setToolTip(QString::fromUtf8(info.name));
@@ -1144,12 +1158,14 @@ void MainWindow::removeSource(uint32_t index)
 
 void MainWindow::removeSinkInput(uint32_t index)
 {
-	if (!sinkInputWidgets.count(index))
-		return;
-
-	delete sinkInputWidgets[index];
-	sinkInputWidgets.erase(index);
-	updateDeviceVisibility();
+	if (sinkInputWidgets.count(index)) {
+		delete sinkInputWidgets[index];
+		sinkInputWidgets.erase(index);
+		updateDeviceVisibility();
+	}
+	if (nvSinkInputs.count(index)) {
+		m_nv_scene->removeNode(*nvSinkInputs[index]);
+	}
 }
 
 void MainWindow::removeSourceOutput(uint32_t index)

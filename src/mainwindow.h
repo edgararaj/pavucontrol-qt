@@ -75,6 +75,7 @@ public:
 	std::map<uint32_t, SourceWidget*> sourceWidgets;
 	std::map<uint32_t, SinkInputWidget*> sinkInputWidgets;
 	std::map<uint32_t, SourceOutputWidget*> sourceOutputWidgets;
+	std::map<uint32_t, QtNodes::Node*> nvSinkInputs;
 
 	std::map<uint32_t, char*> clientNames;
 	SinkInputType showSinkInputType;
