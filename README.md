@@ -26,12 +26,12 @@ git submodule update --init --recursive
 ```console
 foo@bar:~/pavucontrol-qt$ mkdir build && cd build
 foo@bar:~/pavucontrol-qt/build$ cmake -GNinja ..
-foo@bar:~/pavucontrol-qt/build$ ninja install
+foo@bar:~/pavucontrol-qt/build$ ninja
 ```
 
 #### 3rd step: Have fun! 🎉
 To run just type:
 ```console
-foo@bar:~$ pavucontrol-qt
+foo@bar:~/pavucontrol-qt/build$ src/pavucontrol-qt
 ```
 
